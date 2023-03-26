@@ -6,4 +6,5 @@
   - Flask
   - Flask_cors
   - requests
- 4. Chạy python app.py
+ 4. Chạy python app.py và điền url server trọng tài (VD: *http://localhost:5000*)
+ ![](https://scontent.fhan14-1.fna.fbcdn.net/v/t1.15752-9/336716978_6126678204020965_6015002417103534719_n.png?_nc_cat=101&ccb=1-7&_nc_sid=ae9488&_nc_ohc=W4U2k4rgnCsAX9X0OIV&_nc_ht=scontent.fhan14-1.fna&oh=03_AdTvT-nFm3mKRHCzJBb0Mm0p31uprE3vXEe7q2RUt9JzxQ&oe=6447A423)
