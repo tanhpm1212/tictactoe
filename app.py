@@ -3,7 +3,7 @@ from flask import Flask, jsonify, make_response
 from threading import Thread
 import requests
 import json
-import time
+import time, copy
 from TicTacToeAi import TicTacToeAI
 
 app = Flask(__name__)
@@ -12,6 +12,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 HOST = 'http://localhost:5000' # Địa chỉ server trọng tài
 game_info = {} # Thông tin trò chơi để hiển thị trên giao diện
+move_info = {} # Thông tin nước đi để gửi đến server trọng tài
 stop_thread = False # Biến dùng để dừng thread lắng nghe
 
 ai = TicTacToeAI('X') # Khởi tạo AI chạy với đội X
@@ -59,15 +60,15 @@ class GameClient:
                 # Nếu là lượt đi của đội của mình thì gửi nước đi
                 if data.get("turn") == self.team_id:
                     self.size = int(data.get("size"))   
-                    self.board = data["board"]
-                    # Lấy nước đi từ AI
-                    move = ai.get_move(data.get("board"), data.get("size"))
+                    self.board = copy.deepcopy(data.get("board"))
+                    # Lấy nước đi từ AI, nước đi là một tuple (i, j)
+                    move = ai.get_move(self.board, self.size)
                     print("Move: ", move)
                     # Kiểm tra nước đi hợp lệ
                     valid_move = self.check_valid_move(move)
                     # Nếu hợp lệ thì gửi nước đi
                     if valid_move:
-                        self.board[int(move[0]) * self.size + int(move[1])] = "X"
+                        self.board[int(move[0]) * self.size + int(move[1])][0] = "X"
                         self.send_move()
                     else:
                         print("Invalid move")
@@ -89,7 +90,7 @@ class GameClient:
             "board": self.board
         }
         headers = {"Content-Type": "application/json"}
-        requests.post(self.server_url, json=move_info, headers=headers)
+        requests.post(self.server_url +"/move", json=move_info, headers=headers)
     
     def check_valid_move(self, new_move_pos):
         # Kiểm tra nước đi hợp lệ
@@ -104,14 +105,14 @@ class GameClient:
 @app.route('/')
 @cross_origin()
 def get_data():
-    global game_info
+    print(game_info)
     response = make_response(jsonify(game_info))
     return response
 
 
 if __name__ == "__main__":
     # Lấy địa chỉ server trọng tài từ người dùng
-    HOST = input("Enter server url: ")
+    # HOST = input("Enter server url: ")
 
     # Khởi tạo game client
     gameClient = GameClient(HOST)
