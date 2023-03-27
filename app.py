@@ -17,6 +17,8 @@ stop_thread = False # Biến dùng để dừng thread lắng nghe
 
 ai = TicTacToeAI('X') # Khởi tạo AI chạy mặc định với đội X
 
+# Giao tiếp với trọng tài qua API: 
+# nghe trọng tài trả về thông tin hiển thị ở '/', gửi yêu cầu khởi tại qua '/init/' và gửi nước đi qua '/move'
 class GameClient:
     def __init__(self, server_url):
         self.server_url = server_url
@@ -84,7 +86,7 @@ class GameClient:
         requests.post(self.server_url, json=game_info, headers=headers)
     
     def send_move(self):
-        #Gửi nước đi đến server trọng tài
+        #Gửi nước đi đến server trọng tài 
         move_info = {
             "match_id": self.match_id,
             "board": self.board
@@ -112,7 +114,7 @@ def get_data():
 
 if __name__ == "__main__":
     # Lấy địa chỉ server trọng tài từ người dùng
-    # HOST = input("Enter server url: ")
+    HOST = input("Enter server url: ")
 
     # Khởi tạo game client
     gameClient = GameClient(HOST)
