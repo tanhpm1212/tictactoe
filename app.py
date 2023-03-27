@@ -15,7 +15,7 @@ game_info = {} # Thông tin trò chơi để hiển thị trên giao diện
 move_info = {} # Thông tin nước đi để gửi đến server trọng tài
 stop_thread = False # Biến dùng để dừng thread lắng nghe
 
-ai = TicTacToeAI('X') # Khởi tạo AI chạy với đội X
+ai = TicTacToeAI('X') # Khởi tạo AI chạy mặc định với đội X
 
 class GameClient:
     def __init__(self, server_url):
