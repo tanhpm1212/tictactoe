@@ -17,6 +17,8 @@ stop_thread = False  # Biến dùng để dừng thread lắng nghe
 
 ai = TicTacToeAI('X')  # Khởi tạo AI chạy mặc định với đội X
 
+# Giao tiếp với trọng tài qua API: 
+# nghe trọng tài trả về thông tin hiển thị ở '/', gửi yêu cầu khởi tại qua '/init/' và gửi nước đi qua '/move'
 class GameClient:
     def __init__(self, server_url, team_id):
         self.server_url = server_url
